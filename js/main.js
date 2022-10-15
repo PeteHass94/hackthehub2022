@@ -56,49 +56,84 @@
 //     document.body.removeChild(temp_link);
 // }
 
-$(document).ready(function() {
-    console.log('start');
+// $(document).ready(function() {
+//     console.log('start');
     
-    promise = $.ajax({
-        type:"GET",
-        dataType:"text",
-        url:"complaintsPriority.csv",
-        cache:false
-    });
+//     promise = $.ajax({
+//         type:"GET",
+//         dataType:"text",
+//         url:"complaintsPriority.csv",
+//         cache:false
+//     });
 
-    promise.done(function(data){
-        //Parse CSV File
-        //split on new line
-        var dataArr = data.split("\n");
+//     promise.done(function(data){
+//         //Parse CSV File
+//         //split on new line
+//         var dataArr = data.split("\n");
 
-        console.log('start2');
-        //for each line in array
-        $.each(dataArr,function(){
-            if (this != "") {
+//         console.log('start2');
+//         //for each line in array
+//         $.each(dataArr,function(){
+//             if (this != "") {
 
-                //split files and create row
-                var row = new String("");
-                valArr = this.split("\t");
-                    row += "<tr>"
+//                 //split files and create row
+//                 var row = new String("");
+//                 valArr = this.split("\t");
+//                     row += "<tr>"
 
-                $.each(valArr, function(){
-                    row += "<td>" + this +"</td>"
-                });     
+//                 $.each(valArr, function(){
+//                     row += "<td>" + this +"</td>"
+//                 });     
 
-                    row += "</tr>"
+//                     row += "</tr>"
 
-                    //Add row to table
-                    $('tbody').append(row);
-            }
+//                     //Add row to table
+//                     $('tbody').append(row);
+//             }
         
+//         });
+
+//     });
+
+//     // Run script if request fails
+//     promise.fail(function(result) {
+//         console.error(result);
+//        console.log('A failure ocurred');
+//     });
+
+// });
+
+
+$(document).ready(function () {
+  
+    // FETCHING DATA FROM JSON FILE
+    $.getJSON("complaintsPriority.json", 
+            function (data) {
+        var student = '';
+
+        // ITERATING THROUGH OBJECTS
+        $.each(data, function (key, value) {
+            console.log('sucess');
+
+            //CONSTRUCTION OF ROWS HAVING
+            // DATA FROM JSON OBJECT
+            student += '<tr>';
+            student += '<td>' + 
+                value.GFGUserName + '</td>';
+
+            student += '<td>' + 
+                value.NoOfProblems + '</td>';
+
+            student += '<td>' + 
+                value.TotalScore + '</td>';
+
+            student += '<td>' + 
+                value.Articles + '</td>';
+
+            student += '</tr>';
         });
-
+          
+        //INSERTING ROWS INTO TABLE 
+        $('#table').append(student);
     });
-
-    // Run script if request fails
-    promise.fail(function(result) {
-        console.error(result);
-       console.log('A failure ocurred');
-    });
-
 });
