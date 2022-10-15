@@ -62,7 +62,7 @@ $(document).ready(function() {
     promise = $.ajax({
         type:"GET",
         dataType:"text",
-        url:"file:///complaintsPriority.csv",
+        url:"complaintsPriority.csv",
         cache:false
     });
 
